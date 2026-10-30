@@ -1,3 +1,7 @@
+-- yslemEgg | Instant TP
+-- Pick a pet (icon + value), press Steal. Dodge full: the player stays frozen where they stand, the body (the clown) jumps from the base onto the egg,
+-- plants a clown, takes the egg, drops it, visits the treadmill, comes back through the clown and delivers.
+
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -333,6 +337,350 @@ pcall(function()
 	remote("RE/EggWorld/FieldEggRedeemVerdict").OnClientEvent:Connect(function()
 		state.Delivered = os.clock()
 	end)
+end)
+
+pcall(function()
+	remote("RE/Alerts/Raise").OnClientEvent:Connect(function(arg)
+		if type(arg) == "table" and type(arg.Text) == "string" and string.find(string.lower(arg.Text), "delivery failed", 1, true) then
+			state.DeliveryFailedAt = os.clock()
+		end
+	end)
+end)
+
+-- the server pulling us back ("Relocate") is noted so the hop is simply repeated
+pcall(function()
+	remote("RE/RigSync/Refresh").OnClientEvent:Connect(function(arg)
+		if type(arg) == "string" then
+			local ok, decoded = pcall(function()
+				return game:GetService("HttpService"):JSONDecode(arg)
+			end)
+			arg = ok and decoded or nil
+		end
+		if type(arg) ~= "table" then
+			return
+		end
+		if arg.Action == "Relocate" then
+			state.PulledAt = os.clock()
+			local a = arg.Arguments
+			if type(a) == "table" and tonumber(a[1]) and tonumber(a[2]) and tonumber(a[3]) then
+				state.RelocPos = Vector3.new(tonumber(a[1]), tonumber(a[2]), tonumber(a[3]))
+			else
+				state.RelocPos = nil
+			end
+		elseif arg.Action == "BeginRagdoll" then
+			state.Ragdoll = true
+			state.RagdollAt = os.clock()
+			state.RagdollArgs = type(arg.Arguments) == "table" and arg.Arguments or nil
+			local r = root()
+			if r then
+				pcall(function()
+					r.AssemblyLinearVelocity = Vector3.zero
+				end)
+			end
+		elseif arg.Action == "EndRagdoll" then
+			state.Ragdoll = false
+			state.RagdollEnd = os.clock()
+		end
+	end)
+end)
+
+local function takeEgg(uid)
+	if type(uid) == "string" and type(EggState) == "table" and type(EggState.CarryFieldEgg) == "function" then
+		pcall(EggState.CarryFieldEgg, uid)
+	end
+end
+
+local function dropEgg()
+	if type(EggState) == "table" and type(EggState.DropFieldEgg) == "function" then
+		pcall(EggState.DropFieldEgg, "PlayerRequest")
+	end
+end
+
+-- the prompt of the egg itself (nearest egg prompt to the egg's position), never one of another egg
+local function promptNear(position, radius)
+	local best, bestDistance = nil, radius
+	for _, child in ipairs(workspace:GetChildren()) do
+		if child.Name == "SmartPromptPart" and child:IsA("BasePart") then
+			local prompt = child:FindFirstChild("CarryAreaEgg")
+			if prompt and prompt:IsA("ProximityPrompt") then
+				local distance = (child.Position - position).Magnitude
+				if distance < bestDistance then
+					best, bestDistance = prompt, distance
+				end
+			end
+		end
+	end
+	return best
+end
+
+-- the carried egg is welded to the character: used to catch a missed carry signal
+local function heldByMe(uid)
+	local character = localPlayer.Character
+	if type(uid) ~= "string" or not character then
+		return false
+	end
+	local egg = workspace:FindFirstChild(uid)
+	if not egg then
+		return false
+	end
+	for _, d in ipairs(egg:GetDescendants()) do
+		if d:IsA("WeldConstraint") or d:IsA("JointInstance") then
+			local ok, a, b = pcall(function()
+				return d.Part0, d.Part1
+			end)
+			if ok and ((a and a:IsDescendantOf(character)) or (b and b:IsDescendantOf(character))) then
+				return true
+			end
+		end
+	end
+	return false
+end
+
+task.spawn(function()
+	while alive do
+		task.wait(0.2)
+		if not state.Carrying then
+			if state.GuessedDrop and heldByMe(state.Uid) then
+				state.GuessedDrop, state.Carrying, state.HeldSeen = false, true, os.clock()
+			end
+		elseif heldByMe(state.Uid) then
+			state.HeldSeen = os.clock()
+		elseif os.clock() - state.HeldSeen > 0.8 then
+			state.Carrying, state.GuessedDrop = false, true
+		end
+	end
+end)
+
+local function snapshot()
+	local list = {}
+	local ok, result = pcall(function()
+		return remote("RF/EggWorld/AskFieldEggSnapshot"):InvokeServer()
+	end)
+	local records = ok and type(result) == "table" and result.Records or nil
+	if type(records) ~= "table" then
+		return list
+	end
+	for _, record in pairs(records) do
+		if type(record) == "table" and type(record.Uid) == "string" and (record.State == "Slot" or record.State == "Dropped") and typeof(record.BottomCFrame) == "CFrame" then
+			list[#list + 1] = record
+		end
+	end
+	return list
+end
+
+local function eggPosition(uid)
+	for _, record in ipairs(snapshot()) do
+		if record.Uid == uid then
+			return record.BottomCFrame.Position
+		end
+	end
+	return nil
+end
+
+------------------------------------------------------------------ egg info for the list (icon, name, value)
+local function describe(record)
+	local directory = type(Assets) == "table" and Assets.Directory or nil
+	local entry = type(directory) == "table" and directory[tostring(record.AssetCategory)] or nil
+	local info = { Uid = record.Uid, Category = tostring(record.AssetCategory), Name = tostring(record.AssetCategory), Icon = "", Rarity = 0, Value = 0 }
+
+	if type(entry) == "table" then
+		info.Name = tostring(entry.DisplayName or record.AssetCategory)
+		local icon = entry.Icon
+		if icon ~= nil and tostring(icon) ~= "" then
+			icon = tostring(icon)
+			info.Icon = tonumber(icon) and ("rbxassetid://" .. icon) or icon
+		end
+		if type(entry.Rarity) == "table" then
+			info.Rarity = tonumber(entry.Rarity.RarityNumber or entry.Rarity.Rank) or 0
+		end
+
+		local scale = tonumber(record.AssetScale) or 1
+		local factor = scale > 5 and (scale / 5) ^ 1.2 * 19.637875755794113 or scale ^ 1.85
+		local mutation = 1
+		if type(Mutations) == "table" and type(Mutations.EarningsFor) == "function" then
+			local okM, resM = pcall(Mutations.EarningsFor, type(record.Mutations) == "table" and record.Mutations or {})
+			if okM and type(resM) == "number" then
+				mutation = resM
+			end
+		end
+		info.Value = (tonumber(entry.EarningRate) or 0) * factor * mutation
+	end
+
+	return info
+end
+
+local function money(value)
+	local units = { { 1e12, "T" }, { 1e9, "B" }, { 1e6, "M" }, { 1e3, "K" } }
+	for _, u in ipairs(units) do
+		if value >= u[1] then
+			return string.format("$%.2f%s/s", value / u[1], u[2])
+		end
+	end
+	return string.format("$%d/s", math.floor(value + 0.5))
+end
+
+------------------------------------------------------------------ Instant TP logic
+local status = function(text) end
+
+local semi = { Dodge = true, DodgeGo = true, TakeFirstHit = true, WakeWait = 2.8, Frozen = false, Home = nil, Kind = nil, AtDrop = false, SlowRun = false, Fails = 0, ResetDone = false, Rotate = nil, ExitPath = nil, Log = {} }
+local inDimensionNow = function()
+	return localPlayer.Character ~= nil and localPlayer:GetAttribute("InHalloweenDimension") == true
+end
+local method = "Relay"
+
+local function slog(msg)
+	local r = root()
+	local list = semi.Log
+	list[#list + 1] = string.format("%.1f %s | y=%s", os.clock() % 1000, msg, r and string.format("%.0f", r.Position.Y) or "nil")
+	if #list > 300 then
+		table.remove(list, 1)
+	end
+end
+
+pcall(function()
+	getgenv().YslemSemiReport = function()
+		return table.concat(semi.Log, "\n")
+	end
+end)
+
+local function frozenCamera()
+	local camera = workspace.CurrentCamera
+	if not camera then
+		return function() end
+	end
+	local oldType = camera.CameraType
+	local frame = camera.CFrame
+	pcall(function()
+		camera.CameraType = Enum.CameraType.Scriptable
+		camera.CFrame = frame
+	end)
+	return function()
+		pcall(function()
+			camera.CameraType = oldType
+		end)
+	end
+end
+
+-- FPS dip: 50 / 40 (never below 40), the pause between two switches is 200 ms while the ping is 200 ms or less,
+-- otherwise it follows the ping (read once, when the dip starts). Only during the delivery.
+local userFps = 240
+pcall(function()
+	if typeof(getfpscap) == "function" then
+		local cap = tonumber(getfpscap())
+		if cap and (cap == 0 or cap >= 60) then
+			userFps = cap
+		end
+	end
+end)
+
+local function restoreFps()
+	if typeof(setfpscap) == "function" then
+		pcall(setfpscap, math.clamp(math.floor(userFps), 0, 1000))
+	end
+end
+
+local function dipInterval()
+	local ping = 0
+	local ok, value = pcall(function()
+		return game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValue()
+	end)
+	if ok then
+		ping = tonumber(value) or 0
+	end
+	if ping <= 200 then
+		return 0.2
+	end
+	return math.clamp(ping / 1000, 0.2, 1)
+end
+
+local function netPing()
+	local ping = 0.1
+	pcall(function()
+		ping = localPlayer:GetNetworkPing()
+	end)
+	return math.clamp(tonumber(ping) or 0.1, 0, 1)
+end
+
+local fpsGen = 0
+local function fpsOn()
+	if typeof(setfpscap) ~= "function" then
+		return
+	end
+	fpsGen += 1
+	local mine = fpsGen
+	task.spawn(function()
+		local high = true
+		local step = dipInterval()
+		local started = os.clock()
+		while fpsGen == mine and os.clock() - started < 60 do
+			pcall(setfpscap, high and 50 or 40)
+			high = not high
+			task.wait(step)
+		end
+		if fpsGen == mine then
+			restoreFps()
+		end
+	end)
+end
+
+local function fpsOff()
+	fpsGen += 1
+	restoreFps()
+end
+
+-- a still copy of the player stays where the egg was taken during the flight; removed on arrival
+local stealClone = nil
+local function dropClone()
+	local copy = stealClone
+	stealClone = nil
+	if copy then
+		pcall(function()
+			copy:Destroy()
+		end)
+	end
+end
+
+local function postClone()
+	dropClone()
+	local character = localPlayer.Character
+	if not character then
+		return
+	end
+	local was = character.Archivable
+	character.Archivable = true
+	local copy = character:Clone()
+	character.Archivable = was
+	if copy then
+		for _, d in ipairs(copy:GetDescendants()) do
+			if d:IsA("LuaSourceContainer") or d:IsA("Animator") or d:IsA("AnimationController") or d:IsA("Sound") then
+				pcall(function()
+					d:Destroy()
+				end)
+			elseif d:IsA("Humanoid") then
+				pcall(function()
+					d.PlatformStand = true
+					d.AutoRotate = false
+					d.WalkSpeed = 0
+					d.JumpPower = 0
+					d.JumpHeight = 0
+					d.BreakJointsOnDeath = false
+					d.DisplayDistanceType = Enum.HumanoidDisplayDistanceType.None
+					d.HealthDisplayType = Enum.HumanoidHealthDisplayType.AlwaysOff
+				end)
+			elseif d:IsA("BasePart") then
+				d.Anchored = true
+				d.CanCollide = false
+				d.CanTouch = false
+				d.CanQuery = false
+			end
+		end
+		copy.Name = "Clone"
+		copy.Parent = workspace
+		stealClone = copy
+	end
+end
+
+---------nd)
 end)
 
 pcall(function()
