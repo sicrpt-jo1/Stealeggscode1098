@@ -1,0 +1,1023 @@
+local Players = game:GetService("Players")
+local ProximityPromptService = game:GetService("ProximityPromptService")
+local RunService = game:GetService("RunService")
+local TweenService = game:GetService("TweenService")
+local CollectionService = game:GetService("CollectionService")
+local UserInputService = game:GetService("UserInputService")
+local Lighting = game:GetService("Lighting")
+local PlayerGui = Players.LocalPlayer:WaitForChild("PlayerGui")
+PlayerGui:FindFirstChild("HeavenHubGui")
+PlayerGui.HeavenHubGui:Destroy()
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "HeavenHubGui"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.IgnoreGuiInset = true
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Global
+ScreenGui.DisplayOrder = 1000
+ScreenGui.Parent = PlayerGui
+local Frame = Instance.new("Frame")
+Frame.Name = "MainFrame"
+Frame.Size = UDim2.new(0, 250, 0, 270)
+Frame.Position = UDim2.new(0.5, -125, 0.5, -135)
+Frame.BackgroundColor3 = Color3.fromRGB(255, 245, 170)
+Frame.BackgroundTransparency = 0.25
+Frame.BorderSizePixel = 0
+Frame.Active = true
+Frame.Draggable = true
+Frame.Parent = ScreenGui
+local UIScale = Instance.new("UIScale")
+UIScale.Scale = 1
+UIScale.Parent = Frame
+local UICorner = Instance.new("UICorner")
+UICorner.CornerRadius = UDim.new(0, 14)
+UICorner.Parent = Frame
+local UIStroke = Instance.new("UIStroke")
+UIStroke.Color = Color3.fromRGB(255, 225, 70)
+UIStroke.Thickness = 2
+UIStroke.Parent = Frame
+local ImageLabel = Instance.new("ImageLabel")
+ImageLabel.Name = "Background"
+ImageLabel.Size = UDim2.fromScale(1, 1)
+ImageLabel.BackgroundTransparency = 1
+ImageLabel.Image = "rbxassetid://104159627923158"
+ImageLabel.ScaleType = Enum.ScaleType.Crop
+ImageLabel.ImageTransparency = 0.75
+ImageLabel.Parent = Frame
+local UICorner2 = Instance.new("UICorner")
+UICorner2.CornerRadius = UDim.new(0, 14)
+UICorner2.Parent = ImageLabel
+local ImageLabel2 = Instance.new("ImageLabel")
+ImageLabel2.Size = UDim2.fromOffset(32, 32)
+ImageLabel2.Position = UDim2.new(0, 9, 0, 5)
+ImageLabel2.BackgroundTransparency = 1
+ImageLabel2.Image = "rbxassetid://104159627923158"
+ImageLabel2.ScaleType = Enum.ScaleType.Fit
+ImageLabel2.ZIndex = 5
+ImageLabel2.Parent = Frame
+local UICorner3 = Instance.new("UICorner")
+UICorner3.CornerRadius = UDim.new(1, 0)
+UICorner3.Parent = ImageLabel2
+local TextLabel = Instance.new("TextLabel")
+TextLabel.Name = "TitleLabel"
+TextLabel.Size = UDim2.new(1, -80, 0, 35)
+TextLabel.Position = UDim2.new(0, 47, 0, 3)
+TextLabel.BackgroundTransparency = 1
+TextLabel.Text = "HEAVEN HUB SAE"
+TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.TextSize = 16
+TextLabel.Font = Enum.Font.GothamBold
+TextLabel.TextXAlignment = Enum.TextXAlignment.Left
+TextLabel.ZIndex = 5
+TextLabel.Parent = Frame
+local TextButton = Instance.new("TextButton")
+TextButton.Name = "Close"
+TextButton.Size = UDim2.fromOffset(26, 26)
+TextButton.Position = UDim2.new(1, -32, 0, 7)
+TextButton.BackgroundColor3 = Color3.fromRGB(255, 225, 70)
+TextButton.Text = "\195\151"
+TextButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextButton.TextSize = 18
+TextButton.Font = Enum.Font.GothamBold
+TextButton.AutoButtonColor = false
+TextButton.ZIndex = 6
+TextButton.Parent = Frame
+local UICorner4 = Instance.new("UICorner")
+UICorner4.CornerRadius = UDim.new(1, 0)
+UICorner4.Parent = TextButton
+local UIStroke2 = Instance.new("UIStroke")
+UIStroke2.Color = Color3.fromRGB(255, 255, 255)
+UIStroke2.Thickness = 1
+UIStroke2.Parent = TextButton
+local ImageButton = Instance.new("ImageButton")
+ImageButton.Name = "HeavenHub"
+ImageButton.Size = UDim2.fromOffset(56, 56)
+ImageButton.Position = UDim2.new(1, -70, 0, 15)
+ImageButton.BackgroundColor3 = Color3.fromRGB(255, 225, 70)
+ImageButton.Image = "rbxassetid://104159627923158"
+ImageButton.ScaleType = Enum.ScaleType.Fit
+ImageButton.Visible = false
+ImageButton.ZIndex = 10000
+ImageButton.AutoButtonColor = false
+ImageButton.Parent = ScreenGui
+local UICorner5 = Instance.new("UICorner")
+UICorner5.CornerRadius = UDim.new(1, 0)
+UICorner5.Parent = ImageButton
+local UIStroke3 = Instance.new("UIStroke")
+UIStroke3.Color = Color3.fromRGB(255, 255, 255)
+UIStroke3.Thickness = 2
+UIStroke3.Parent = ImageButton
+ImageButton.InputBegan:Connect(function(input, gameProcessed)
+end)
+ImageButton.InputChanged:Connect(function(input2, gameProcessed2)
+end)
+UserInputService.InputChanged:Connect(function(input3, gameProcessed3)
+end)
+TextButton.MouseButton1Click:Connect(function()
+	Frame.Visible = false
+	ImageButton.Visible = true
+end)
+ImageButton.MouseButton1Click:Connect(function()
+	Frame.Visible = true
+	ImageButton.Visible = false
+end)
+local TextButton2 = Instance.new("TextButton")
+TextButton2.Size = UDim2.new(0.25, -6, 0, 24)
+TextButton2.Position = UDim2.new(0, 5, 0, 39)
+TextButton2.Text = "Main"
+TextButton2.TextSize = 11
+TextButton2.Font = Enum.Font.GothamBold
+TextButton2.AutoButtonColor = false
+TextButton2.Parent = Frame
+local UIStroke4 = Instance.new("UIStroke")
+UIStroke4.Name = "ButtonStroke"
+UIStroke4.Color = Color3.fromRGB(255, 225, 70)
+UIStroke4.Thickness = 1.2
+UIStroke4.Transparency = 0.2
+UIStroke4.Parent = TextButton2
+local UICorner6 = Instance.new("UICorner")
+UICorner6.CornerRadius = UDim.new(0, 9)
+UICorner6.Parent = TextButton2
+TextButton2.AutoButtonColor = false
+TextButton2.MouseButton1Down:Connect(function(x, y)
+	local tween = TweenService:Create(TextButton2, TweenInfo.new(0.12, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(0.25, -9, 0, 22) })
+	tween:Play()
+end)
+TextButton2.MouseButton1Up:Connect(function(arg)
+	local tween2 = TweenService:Create(TextButton2, TweenInfo.new(0.12, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(0.25, -6, 0, 24) })
+	tween2:Play()
+end)
+local TextButton3 = Instance.new("TextButton")
+TextButton3.Size = UDim2.new(0.25, -6, 0, 24)
+TextButton3.Position = UDim2.new(0.25, 1, 0, 39)
+TextButton3.Text = "Main 2"
+TextButton3.TextSize = 11
+TextButton3.Font = Enum.Font.GothamSemibold
+TextButton3.AutoButtonColor = false
+TextButton3.Parent = Frame
+local UIStroke5 = Instance.new("UIStroke")
+UIStroke5.Name = "ButtonStroke"
+UIStroke5.Color = Color3.fromRGB(255, 225, 70)
+UIStroke5.Thickness = 1.2
+UIStroke5.Transparency = 0.2
+UIStroke5.Parent = TextButton3
+local UICorner7 = Instance.new("UICorner")
+UICorner7.CornerRadius = UDim.new(0, 9)
+UICorner7.Parent = TextButton3
+TextButton3.AutoButtonColor = false
+TextButton3.MouseButton1Down:Connect(function(x2, y2)
+	local tween3 = TweenService:Create(TextButton3, TweenInfo.new(0.12, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(0.25, -9, 0, 22) })
+	tween3:Play()
+end)
+TextButton3.MouseButton1Up:Connect(function(arg2)
+	local tween4 = TweenService:Create(TextButton3, TweenInfo.new(0.12, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(0.25, -6, 0, 24) })
+	tween4:Play()
+end)
+local TextButton4 = Instance.new("TextButton")
+TextButton4.Size = UDim2.new(0.25, -6, 0, 24)
+TextButton4.Position = UDim2.new(0.5, -1, 0, 39)
+TextButton4.Text = "Misc"
+TextButton4.TextSize = 11
+TextButton4.Font = Enum.Font.GothamSemibold
+TextButton4.AutoButtonColor = false
+TextButton4.Parent = Frame
+local UIStroke6 = Instance.new("UIStroke")
+UIStroke6.Name = "ButtonStroke"
+UIStroke6.Color = Color3.fromRGB(255, 225, 70)
+UIStroke6.Thickness = 1.2
+UIStroke6.Transparency = 0.2
+UIStroke6.Parent = TextButton4
+local UICorner8 = Instance.new("UICorner")
+UICorner8.CornerRadius = UDim.new(0, 9)
+UICorner8.Parent = TextButton4
+TextButton4.AutoButtonColor = false
+TextButton4.MouseButton1Down:Connect(function(x3, y3)
+	local tween5 = TweenService:Create(TextButton4, TweenInfo.new(0.12, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(0.25, -9, 0, 22) })
+	tween5:Play()
+end)
+TextButton4.MouseButton1Up:Connect(function(arg3)
+	local tween6 = TweenService:Create(TextButton4, TweenInfo.new(0.12, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(0.25, -6, 0, 24) })
+	tween6:Play()
+end)
+local TextButton5 = Instance.new("TextButton")
+TextButton5.Size = UDim2.new(0.25, -6, 0, 24)
+TextButton5.Position = UDim2.new(0.75, -3, 0, 39)
+TextButton5.Text = "Others"
+TextButton5.TextSize = 11
+TextButton5.Font = Enum.Font.GothamSemibold
+TextButton5.AutoButtonColor = false
+TextButton5.Parent = Frame
+local UIStroke7 = Instance.new("UIStroke")
+UIStroke7.Name = "ButtonStroke"
+UIStroke7.Color = Color3.fromRGB(255, 225, 70)
+UIStroke7.Thickness = 1.2
+UIStroke7.Transparency = 0.2
+UIStroke7.Parent = TextButton5
+local UICorner9 = Instance.new("UICorner")
+UICorner9.CornerRadius = UDim.new(0, 9)
+UICorner9.Parent = TextButton5
+TextButton5.AutoButtonColor = false
+TextButton5.MouseButton1Down:Connect(function(x4, y4)
+	local tween7 = TweenService:Create(TextButton5, TweenInfo.new(0.12, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(0.25, -9, 0, 22) })
+	tween7:Play()
+end)
+TextButton5.MouseButton1Up:Connect(function(arg4)
+	local tween8 = TweenService:Create(TextButton5, TweenInfo.new(0.12, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(0.25, -6, 0, 24) })
+	tween8:Play()
+end)
+TextButton2.BackgroundColor3 = Color3.fromRGB(255, 225, 70)
+TextButton2.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextButton3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextButton3.TextColor3 = Color3.fromRGB(80, 70, 25)
+TextButton4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextButton4.TextColor3 = Color3.fromRGB(80, 70, 25)
+TextButton5.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextButton5.TextColor3 = Color3.fromRGB(80, 70, 25)
+local Frame2 = Instance.new("Frame")
+Frame2.Size = UDim2.new(1, 0, 1, -70)
+Frame2.Position = UDim2.new(0, 0, 0, 68)
+Frame2.BackgroundTransparency = 1
+Frame2.Parent = Frame
+local Frame3 = Instance.new("Frame")
+Frame3.Size = UDim2.new(1, 0, 1, -70)
+Frame3.Position = UDim2.new(0, 0, 0, 68)
+Frame3.BackgroundTransparency = 1
+Frame3.Visible = false
+Frame3.Parent = Frame
+local Frame4 = Instance.new("Frame")
+Frame4.Size = UDim2.new(1, 0, 1, -70)
+Frame4.Position = UDim2.new(0, 0, 0, 68)
+Frame4.BackgroundTransparency = 1
+Frame4.Visible = false
+Frame4.Parent = Frame
+local Frame5 = Instance.new("Frame")
+Frame5.Size = UDim2.new(1, 0, 1, -70)
+Frame5.Position = UDim2.new(0, 0, 0, 68)
+Frame5.BackgroundTransparency = 1
+Frame5.Visible = false
+Frame5.Parent = Frame
+TextButton2.MouseButton1Click:Connect(function()
+	Frame2.Visible = true
+	Frame3.Visible = false
+	Frame4.Visible = false
+	Frame5.Visible = false
+	TextButton2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	TextButton2.TextColor3 = Color3.fromRGB(80, 70, 25)
+	TextButton2.Font = Enum.Font.GothamSemibold
+	TextButton3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	TextButton3.TextColor3 = Color3.fromRGB(80, 70, 25)
+	TextButton3.Font = Enum.Font.GothamSemibold
+	TextButton4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	TextButton4.TextColor3 = Color3.fromRGB(80, 70, 25)
+	TextButton4.Font = Enum.Font.GothamSemibold
+	TextButton5.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	TextButton5.TextColor3 = Color3.fromRGB(80, 70, 25)
+	TextButton5.Font = Enum.Font.GothamSemibold
+	TextButton2.BackgroundColor3 = Color3.fromRGB(255, 225, 70)
+	TextButton2.TextColor3 = Color3.fromRGB(255, 255, 255)
+	TextButton2.Font = Enum.Font.GothamBold
+end)
+TextButton3.MouseButton1Click:Connect(function()
+	Frame2.Visible = false
+	Frame3.Visible = true
+	Frame4.Visible = false
+	Frame5.Visible = false
+	TextButton2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	TextButton2.TextColor3 = Color3.fromRGB(80, 70, 25)
+	TextButton2.Font = Enum.Font.GothamSemibold
+	TextButton3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	TextButton3.TextColor3 = Color3.fromRGB(80, 70, 25)
+	TextButton3.Font = Enum.Font.GothamSemibold
+	TextButton4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	TextButton4.TextColor3 = Color3.fromRGB(80, 70, 25)
+	TextButton4.Font = Enum.Font.GothamSemibold
+	TextButton5.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	TextButton5.TextColor3 = Color3.fromRGB(80, 70, 25)
+	TextButton5.Font = Enum.Font.GothamSemibold
+	TextButton3.BackgroundColor3 = Color3.fromRGB(255, 225, 70)
+	TextButton3.TextColor3 = Color3.fromRGB(255, 255, 255)
+	TextButton3.Font = Enum.Font.GothamBold
+end)
+TextButton4.MouseButton1Click:Connect(function()
+	Frame2.Visible = false
+	Frame3.Visible = false
+	Frame4.Visible = true
+	Frame5.Visible = false
+	TextButton2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	TextButton2.TextColor3 = Color3.fromRGB(80, 70, 25)
+	TextButton2.Font = Enum.Font.GothamSemibold
+	TextButton3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	TextButton3.TextColor3 = Color3.fromRGB(80, 70, 25)
+	TextButton3.Font = Enum.Font.GothamSemibold
+	TextButton4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	TextButton4.TextColor3 = Color3.fromRGB(80, 70, 25)
+	TextButton4.Font = Enum.Font.GothamSemibold
+	TextButton5.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	TextButton5.TextColor3 = Color3.fromRGB(80, 70, 25)
+	TextButton5.Font = Enum.Font.GothamSemibold
+	TextButton4.BackgroundColor3 = Color3.fromRGB(255, 225, 70)
+	TextButton4.TextColor3 = Color3.fromRGB(255, 255, 255)
+	TextButton4.Font = Enum.Font.GothamBold
+end)
+TextButton5.MouseButton1Click:Connect(function()
+	Frame2.Visible = false
+	Frame3.Visible = false
+	Frame4.Visible = false
+	Frame5.Visible = true
+	TextButton2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	TextButton2.TextColor3 = Color3.fromRGB(80, 70, 25)
+	TextButton2.Font = Enum.Font.GothamSemibold
+	TextButton3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	TextButton3.TextColor3 = Color3.fromRGB(80, 70, 25)
+	TextButton3.Font = Enum.Font.GothamSemibold
+	TextButton4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	TextButton4.TextColor3 = Color3.fromRGB(80, 70, 25)
+	TextButton4.Font = Enum.Font.GothamSemibold
+	TextButton5.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	TextButton5.TextColor3 = Color3.fromRGB(80, 70, 25)
+	TextButton5.Font = Enum.Font.GothamSemibold
+	TextButton5.BackgroundColor3 = Color3.fromRGB(255, 225, 70)
+	TextButton5.TextColor3 = Color3.fromRGB(255, 255, 255)
+	TextButton5.Font = Enum.Font.GothamBold
+end)
+local TextButton6 = Instance.new("TextButton")
+TextButton6.Name = "AntiHitBtn"
+TextButton6.Size = UDim2.new(1, -20, 0, 32)
+TextButton6.Position = UDim2.new(0, 10, 0, 8)
+TextButton6.Text = "Anti-Hit: OFF"
+TextButton6.TextSize = 12
+TextButton6.Font = Enum.Font.GothamSemibold
+TextButton6.AutoButtonColor = false
+TextButton6.Parent = Frame2
+local UIStroke8 = Instance.new("UIStroke")
+UIStroke8.Name = "ButtonStroke"
+UIStroke8.Color = Color3.fromRGB(255, 225, 70)
+UIStroke8.Thickness = 1.2
+UIStroke8.Transparency = 0.2
+UIStroke8.Parent = TextButton6
+local UICorner10 = Instance.new("UICorner")
+UICorner10.CornerRadius = UDim.new(0, 9)
+UICorner10.Parent = TextButton6
+TextButton6.BackgroundTransparency = 0.05
+TextButton6.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextButton6.TextColor3 = Color3.fromRGB(80, 70, 25)
+TextButton6.AutoButtonColor = false
+TextButton6.MouseButton1Down:Connect(function(x5, y5)
+	local tween9 = TweenService:Create(TextButton6, TweenInfo.new(0.12, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(1, -23, 0, 30) })
+	tween9:Play()
+end)
+TextButton6.MouseButton1Up:Connect(function(arg5)
+	local tween10 = TweenService:Create(TextButton6, TweenInfo.new(0.12, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(1, -20, 0, 32) })
+	tween10:Play()
+end)
+local TextButton7 = Instance.new("TextButton")
+TextButton7.Name = "AntiHitV2Btn"
+TextButton7.Size = UDim2.new(1, -20, 0, 32)
+TextButton7.Position = UDim2.new(0, 10, 0, 46)
+TextButton7.Text = "Anti Hit V2: OFF"
+TextButton7.TextSize = 12
+TextButton7.Font = Enum.Font.GothamSemibold
+TextButton7.AutoButtonColor = false
+TextButton7.Parent = Frame2
+local UIStroke9 = Instance.new("UIStroke")
+UIStroke9.Name = "ButtonStroke"
+UIStroke9.Color = Color3.fromRGB(255, 225, 70)
+UIStroke9.Thickness = 1.2
+UIStroke9.Transparency = 0.2
+UIStroke9.Parent = TextButton7
+local UICorner11 = Instance.new("UICorner")
+UICorner11.CornerRadius = UDim.new(0, 9)
+UICorner11.Parent = TextButton7
+TextButton7.BackgroundTransparency = 0.05
+TextButton7.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextButton7.TextColor3 = Color3.fromRGB(80, 70, 25)
+TextButton7.AutoButtonColor = false
+TextButton7.MouseButton1Down:Connect(function(x6, y6)
+	local tween11 = TweenService:Create(TextButton7, TweenInfo.new(0.12, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(1, -23, 0, 30) })
+	tween11:Play()
+end)
+TextButton7.MouseButton1Up:Connect(function(arg6)
+	local tween12 = TweenService:Create(TextButton7, TweenInfo.new(0.12, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(1, -20, 0, 32) })
+	tween12:Play()
+end)
+local TextButton8 = Instance.new("TextButton")
+TextButton8.Name = "InstantGrabBtn"
+TextButton8.Size = UDim2.new(1, -20, 0, 32)
+TextButton8.Position = UDim2.new(0, 10, 0, 84)
+TextButton8.Text = "Instant Grab: OFF"
+TextButton8.TextSize = 12
+TextButton8.Font = Enum.Font.GothamSemibold
+TextButton8.AutoButtonColor = false
+TextButton8.Parent = Frame2
+local UIStroke10 = Instance.new("UIStroke")
+UIStroke10.Name = "ButtonStroke"
+UIStroke10.Color = Color3.fromRGB(255, 225, 70)
+UIStroke10.Thickness = 1.2
+UIStroke10.Transparency = 0.2
+UIStroke10.Parent = TextButton8
+local UICorner12 = Instance.new("UICorner")
+UICorner12.CornerRadius = UDim.new(0, 9)
+UICorner12.Parent = TextButton8
+TextButton8.BackgroundTransparency = 0.05
+TextButton8.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextButton8.TextColor3 = Color3.fromRGB(80, 70, 25)
+TextButton8.AutoButtonColor = false
+TextButton8.MouseButton1Down:Connect(function(x7, y7)
+	local tween13 = TweenService:Create(TextButton8, TweenInfo.new(0.12, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(1, -23, 0, 30) })
+	tween13:Play()
+end)
+TextButton8.MouseButton1Up:Connect(function(arg7)
+	local tween14 = TweenService:Create(TextButton8, TweenInfo.new(0.12, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(1, -20, 0, 32) })
+	tween14:Play()
+end)
+local TextButton9 = Instance.new("TextButton")
+TextButton9.Name = "AntiKnockbackBtn"
+TextButton9.Size = UDim2.new(1, -20, 0, 32)
+TextButton9.Position = UDim2.new(0, 10, 0, 122)
+TextButton9.Text = "Anti Knockback: OFF"
+TextButton9.TextSize = 12
+TextButton9.Font = Enum.Font.GothamSemibold
+TextButton9.AutoButtonColor = false
+TextButton9.Parent = Frame2
+local UIStroke11 = Instance.new("UIStroke")
+UIStroke11.Name = "ButtonStroke"
+UIStroke11.Color = Color3.fromRGB(255, 225, 70)
+UIStroke11.Thickness = 1.2
+UIStroke11.Transparency = 0.2
+UIStroke11.Parent = TextButton9
+local UICorner13 = Instance.new("UICorner")
+UICorner13.CornerRadius = UDim.new(0, 9)
+UICorner13.Parent = TextButton9
+TextButton9.BackgroundTransparency = 0.05
+TextButton9.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextButton9.TextColor3 = Color3.fromRGB(80, 70, 25)
+TextButton9.AutoButtonColor = false
+TextButton9.MouseButton1Down:Connect(function(x8, y8)
+	local tween15 = TweenService:Create(TextButton9, TweenInfo.new(0.12, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(1, -23, 0, 30) })
+	tween15:Play()
+end)
+TextButton9.MouseButton1Up:Connect(function(arg8)
+	local tween16 = TweenService:Create(TextButton9, TweenInfo.new(0.12, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(1, -20, 0, 32) })
+	tween16:Play()
+end)
+TextButton9.BackgroundTransparency = 0.05
+TextButton9.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextButton9.TextColor3 = Color3.fromRGB(80, 70, 25)
+local TextButton10 = Instance.new("TextButton")
+TextButton10.Name = "InstantStealBtn"
+TextButton10.Size = UDim2.new(1, -20, 0, 32)
+TextButton10.Position = UDim2.new(0, 10, 0, 8)
+TextButton10.Text = "Instant Steal"
+TextButton10.TextSize = 12
+TextButton10.Font = Enum.Font.GothamSemibold
+TextButton10.AutoButtonColor = false
+TextButton10.Parent = Frame3
+local UIStroke12 = Instance.new("UIStroke")
+UIStroke12.Name = "ButtonStroke"
+UIStroke12.Color = Color3.fromRGB(255, 225, 70)
+UIStroke12.Thickness = 1.2
+UIStroke12.Transparency = 0.2
+UIStroke12.Parent = TextButton10
+local UICorner14 = Instance.new("UICorner")
+UICorner14.CornerRadius = UDim.new(0, 9)
+UICorner14.Parent = TextButton10
+TextButton10.BackgroundTransparency = 0.05
+TextButton10.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextButton10.TextColor3 = Color3.fromRGB(80, 70, 25)
+TextButton10.AutoButtonColor = false
+TextButton10.MouseButton1Down:Connect(function(x9, y9)
+	local tween17 = TweenService:Create(TextButton10, TweenInfo.new(0.12, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(1, -23, 0, 30) })
+	tween17:Play()
+end)
+TextButton10.MouseButton1Up:Connect(function(arg9)
+	local tween18 = TweenService:Create(TextButton10, TweenInfo.new(0.12, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(1, -20, 0, 32) })
+	tween18:Play()
+end)
+local TextButton11 = Instance.new("TextButton")
+TextButton11.Name = "LowServerHopperBtn"
+TextButton11.Size = UDim2.new(1, -20, 0, 32)
+TextButton11.Position = UDim2.new(0, 10, 0, 46)
+TextButton11.Text = "Low Server Hopper"
+TextButton11.TextSize = 12
+TextButton11.Font = Enum.Font.GothamSemibold
+TextButton11.AutoButtonColor = false
+TextButton11.Parent = Frame3
+local UIStroke13 = Instance.new("UIStroke")
+UIStroke13.Name = "ButtonStroke"
+UIStroke13.Color = Color3.fromRGB(255, 225, 70)
+UIStroke13.Thickness = 1.2
+UIStroke13.Transparency = 0.2
+UIStroke13.Parent = TextButton11
+local UICorner15 = Instance.new("UICorner")
+UICorner15.CornerRadius = UDim.new(0, 9)
+UICorner15.Parent = TextButton11
+TextButton11.BackgroundTransparency = 0.05
+TextButton11.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextButton11.TextColor3 = Color3.fromRGB(80, 70, 25)
+TextButton11.AutoButtonColor = false
+TextButton11.MouseButton1Down:Connect(function(x10, y10)
+	local tween19 = TweenService:Create(TextButton11, TweenInfo.new(0.12, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(1, -23, 0, 30) })
+	tween19:Play()
+end)
+TextButton11.MouseButton1Up:Connect(function(arg10)
+	local tween20 = TweenService:Create(TextButton11, TweenInfo.new(0.12, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(1, -20, 0, 32) })
+	tween20:Play()
+end)
+local TextButton12 = Instance.new("TextButton")
+TextButton12.Name = "InfiniteJumpBtn"
+TextButton12.Size = UDim2.new(1, -20, 0, 32)
+TextButton12.Position = UDim2.new(0, 10, 0, 8)
+TextButton12.Text = "Infinity Jump: OFF"
+TextButton12.TextSize = 12
+TextButton12.Font = Enum.Font.GothamSemibold
+TextButton12.AutoButtonColor = false
+TextButton12.Parent = Frame5
+local UIStroke14 = Instance.new("UIStroke")
+UIStroke14.Name = "ButtonStroke"
+UIStroke14.Color = Color3.fromRGB(255, 225, 70)
+UIStroke14.Thickness = 1.2
+UIStroke14.Transparency = 0.2
+UIStroke14.Parent = TextButton12
+local UICorner16 = Instance.new("UICorner")
+UICorner16.CornerRadius = UDim.new(0, 9)
+UICorner16.Parent = TextButton12
+TextButton12.BackgroundTransparency = 0.05
+TextButton12.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextButton12.TextColor3 = Color3.fromRGB(80, 70, 25)
+TextButton12.AutoButtonColor = false
+TextButton12.MouseButton1Down:Connect(function(x11, y11)
+	local tween21 = TweenService:Create(TextButton12, TweenInfo.new(0.12, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(1, -23, 0, 30) })
+	tween21:Play()
+end)
+TextButton12.MouseButton1Up:Connect(function(arg11)
+	local tween22 = TweenService:Create(TextButton12, TweenInfo.new(0.12, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(1, -20, 0, 32) })
+	tween22:Play()
+end)
+local TextButton13 = Instance.new("TextButton")
+TextButton13.Name = "AntiLagBtn"
+TextButton13.Size = UDim2.new(1, -20, 0, 32)
+TextButton13.Position = UDim2.new(0, 10, 0, 46)
+TextButton13.Text = "Anti-Lag: OFF"
+TextButton13.TextSize = 12
+TextButton13.Font = Enum.Font.GothamSemibold
+TextButton13.AutoButtonColor = false
+TextButton13.Parent = Frame5
+local UIStroke15 = Instance.new("UIStroke")
+UIStroke15.Name = "ButtonStroke"
+UIStroke15.Color = Color3.fromRGB(255, 225, 70)
+UIStroke15.Thickness = 1.2
+UIStroke15.Transparency = 0.2
+UIStroke15.Parent = TextButton13
+local UICorner17 = Instance.new("UICorner")
+UICorner17.CornerRadius = UDim.new(0, 9)
+UICorner17.Parent = TextButton13
+TextButton13.BackgroundTransparency = 0.05
+TextButton13.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextButton13.TextColor3 = Color3.fromRGB(80, 70, 25)
+TextButton13.AutoButtonColor = false
+TextButton13.MouseButton1Down:Connect(function(x12, y12)
+	local tween23 = TweenService:Create(TextButton13, TweenInfo.new(0.12, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(1, -23, 0, 30) })
+	tween23:Play()
+end)
+TextButton13.MouseButton1Up:Connect(function(arg12)
+	local tween24 = TweenService:Create(TextButton13, TweenInfo.new(0.12, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(1, -20, 0, 32) })
+	tween24:Play()
+end)
+local TextButton14 = Instance.new("TextButton")
+TextButton14.Name = "HitboxExpanderBtn"
+TextButton14.Size = UDim2.new(1, -20, 0, 32)
+TextButton14.Position = UDim2.new(0, 10, 0, 84)
+TextButton14.Text = "Hitbox Expander: OFF"
+TextButton14.TextSize = 12
+TextButton14.Font = Enum.Font.GothamSemibold
+TextButton14.AutoButtonColor = false
+TextButton14.Parent = Frame5
+local UIStroke16 = Instance.new("UIStroke")
+UIStroke16.Name = "ButtonStroke"
+UIStroke16.Color = Color3.fromRGB(255, 225, 70)
+UIStroke16.Thickness = 1.2
+UIStroke16.Transparency = 0.2
+UIStroke16.Parent = TextButton14
+local UICorner18 = Instance.new("UICorner")
+UICorner18.CornerRadius = UDim.new(0, 9)
+UICorner18.Parent = TextButton14
+TextButton14.BackgroundTransparency = 0.05
+TextButton14.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextButton14.TextColor3 = Color3.fromRGB(80, 70, 25)
+TextButton14.AutoButtonColor = false
+TextButton14.MouseButton1Down:Connect(function(x13, y13)
+	local tween25 = TweenService:Create(TextButton14, TweenInfo.new(0.12, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(1, -23, 0, 30) })
+	tween25:Play()
+end)
+TextButton14.MouseButton1Up:Connect(function(arg13)
+	local tween26 = TweenService:Create(TextButton14, TweenInfo.new(0.12, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(1, -20, 0, 32) })
+	tween26:Play()
+end)
+local TextButton15 = Instance.new("TextButton")
+TextButton15.Name = "BgStyleBtn"
+TextButton15.Size = UDim2.new(1, -20, 0, 32)
+TextButton15.Position = UDim2.new(0, 10, 0, 8)
+TextButton15.Text = "Background: Heaven"
+TextButton15.TextSize = 12
+TextButton15.Font = Enum.Font.GothamSemibold
+TextButton15.AutoButtonColor = false
+TextButton15.Parent = Frame4
+local UIStroke17 = Instance.new("UIStroke")
+UIStroke17.Name = "ButtonStroke"
+UIStroke17.Color = Color3.fromRGB(255, 225, 70)
+UIStroke17.Thickness = 1.2
+UIStroke17.Transparency = 0.2
+UIStroke17.Parent = TextButton15
+local UICorner19 = Instance.new("UICorner")
+UICorner19.CornerRadius = UDim.new(0, 9)
+UICorner19.Parent = TextButton15
+TextButton15.BackgroundTransparency = 0.05
+TextButton15.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextButton15.TextColor3 = Color3.fromRGB(80, 70, 25)
+TextButton15.AutoButtonColor = false
+TextButton15.MouseButton1Down:Connect(function(x14, y14)
+	local tween27 = TweenService:Create(TextButton15, TweenInfo.new(0.12, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(1, -23, 0, 30) })
+	tween27:Play()
+end)
+TextButton15.MouseButton1Up:Connect(function(arg14)
+	local tween28 = TweenService:Create(TextButton15, TweenInfo.new(0.12, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(1, -20, 0, 32) })
+	tween28:Play()
+end)
+local TextButton16 = Instance.new("TextButton")
+TextButton16.Name = "ScaleBtn"
+TextButton16.Size = UDim2.new(1, -20, 0, 32)
+TextButton16.Position = UDim2.new(0, 10, 0, 46)
+TextButton16.Text = "GUI Scale: 1.0x"
+TextButton16.TextSize = 12
+TextButton16.Font = Enum.Font.GothamSemibold
+TextButton16.AutoButtonColor = false
+TextButton16.Parent = Frame4
+local UIStroke18 = Instance.new("UIStroke")
+UIStroke18.Name = "ButtonStroke"
+UIStroke18.Color = Color3.fromRGB(255, 225, 70)
+UIStroke18.Thickness = 1.2
+UIStroke18.Transparency = 0.2
+UIStroke18.Parent = TextButton16
+local UICorner20 = Instance.new("UICorner")
+UICorner20.CornerRadius = UDim.new(0, 9)
+UICorner20.Parent = TextButton16
+TextButton16.BackgroundTransparency = 0.05
+TextButton16.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextButton16.TextColor3 = Color3.fromRGB(80, 70, 25)
+TextButton16.AutoButtonColor = false
+TextButton16.MouseButton1Down:Connect(function(x15, y15)
+	local tween29 = TweenService:Create(TextButton16, TweenInfo.new(0.12, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(1, -23, 0, 30) })
+	tween29:Play()
+end)
+TextButton16.MouseButton1Up:Connect(function(arg15)
+	local tween30 = TweenService:Create(TextButton16, TweenInfo.new(0.12, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(1, -20, 0, 32) })
+	tween30:Play()
+end)
+TextButton10.MouseButton1Click:Connect(function()
+	local response = game:HttpGet("https://raw.githubusercontent.com/heavenlylocked05/Instant-steal-test3/refs/heads/main/Heaven_Hub_Instant_Steal_No_First_Line.lua.txt")
+	loadstring(response)()
+end)
+TextButton11.MouseButton1Click:Connect(function()
+	local response2 = game:HttpGet("https://encrypt-x.pages.dev/Scripts?Id=1765404782206")
+	loadstring(response2)("1765404782206")
+end)
+TextButton14.MouseButton1Click:Connect(function()
+	TextButton14.Text = "Hitbox Expander: ON"
+	TextButton14.BackgroundTransparency = 0.05
+	TextButton14.BackgroundColor3 = Color3.fromRGB(255, 225, 70)
+	TextButton14.TextColor3 = Color3.fromRGB(255, 255, 255)
+	local ScreenGui2 = Instance.new("ScreenGui")
+	ScreenGui2.Name = "HeavenHitboxUI"
+	ScreenGui2.ResetOnSpawn = false
+	ScreenGui2.IgnoreGuiInset = true
+	ScreenGui2.DisplayOrder = 2000
+	ScreenGui2.Parent = PlayerGui
+	local Frame9 = Instance.new("Frame")
+	Frame9.Name = "HitboxWindow"
+	Frame9.Parent = ScreenGui2
+	Frame9.Size = UDim2.fromOffset(190, 135)
+	Frame9.Position = UDim2.new(0.5, -95, 0.5, -67)
+	Frame9.BackgroundColor3 = Color3.fromRGB(255, 245, 170)
+	Frame9.BackgroundTransparency = 0.12
+	Frame9.BorderSizePixel = 0
+	Frame9.Active = true
+	Frame9.Draggable = true
+	Frame9.ClipsDescendants = true
+	local UICorner23 = Instance.new("UICorner")
+	UICorner23.CornerRadius = UDim.new(0, 14)
+	UICorner23.Parent = Frame9
+	local UIStroke19 = Instance.new("UIStroke")
+	UIStroke19.Color = Color3.fromRGB(255, 225, 70)
+	UIStroke19.Thickness = 2
+	UIStroke19.Parent = Frame9
+	local ImageLabel4 = Instance.new("ImageLabel")
+	ImageLabel4.Size = UDim2.fromScale(1, 1)
+	ImageLabel4.BackgroundTransparency = 1
+	ImageLabel4.Image = "rbxassetid://104159627923158"
+	ImageLabel4.ImageTransparency = 0.78
+	ImageLabel4.ScaleType = Enum.ScaleType.Crop
+	ImageLabel4.ZIndex = 0
+	ImageLabel4.Parent = Frame9
+	local UICorner24 = Instance.new("UICorner")
+	UICorner24.CornerRadius = UDim.new(0, 14)
+	UICorner24.Parent = ImageLabel4
+	local ImageLabel5 = Instance.new("ImageLabel")
+	ImageLabel5.Size = UDim2.fromOffset(30, 30)
+	ImageLabel5.Position = UDim2.new(0, 8, 0, 5)
+	ImageLabel5.BackgroundTransparency = 1
+	ImageLabel5.Image = "rbxassetid://104159627923158"
+	ImageLabel5.ScaleType = Enum.ScaleType.Fit
+	ImageLabel5.ZIndex = 3
+	ImageLabel5.Parent = Frame9
+	local TextLabel3 = Instance.new("TextLabel")
+	TextLabel3.Size = UDim2.new(1, -50, 0, 30)
+	TextLabel3.Position = UDim2.new(0, 43, 0, 5)
+	TextLabel3.BackgroundTransparency = 1
+	TextLabel3.Text = "HEAVEN HITBOX"
+	TextLabel3.TextColor3 = Color3.fromRGB(80, 70, 25)
+	TextLabel3.TextSize = 13
+	TextLabel3.Font = Enum.Font.GothamBold
+	TextLabel3.TextXAlignment = Enum.TextXAlignment.Left
+	TextLabel3.ZIndex = 3
+	TextLabel3.Parent = Frame9
+	local TextButton17 = Instance.new("TextButton")
+	TextButton17.Name = "Collapse"
+	TextButton17.Size = UDim2.fromOffset(25, 25)
+	TextButton17.Position = UDim2.new(1, -30, 0, 7)
+	TextButton17.Text = "\226\136\146"
+	TextButton17.TextSize = 18
+	TextButton17.Font = Enum.Font.GothamBold
+	TextButton17.BackgroundColor3 = Color3.fromRGB(255, 225, 70)
+	TextButton17.TextColor3 = Color3.fromRGB(255, 255, 255)
+	TextButton17.AutoButtonColor = true
+	TextButton17.ZIndex = 4
+	TextButton17.Parent = Frame9
+	local UICorner25 = Instance.new("UICorner")
+	UICorner25.CornerRadius = UDim.new(1, 0)
+	UICorner25.Parent = TextButton17
+	local UIStroke20 = Instance.new("UIStroke")
+	UIStroke20.Color = Color3.fromRGB(255, 255, 255)
+	UIStroke20.Thickness = 1
+	UIStroke20.Parent = TextButton17
+	local TextBox = Instance.new("TextBox")
+	TextBox.Name = "SizeBox"
+	TextBox.Size = UDim2.fromOffset(150, 30)
+	TextBox.Position = UDim2.new(0, 20, 0, 43)
+	TextBox.Text = "10"
+	TextBox.PlaceholderText = "Size"
+	TextBox.ClearTextOnFocus = false
+	TextBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	TextBox.TextColor3 = Color3.fromRGB(80, 70, 25)
+	TextBox.TextSize = 12
+	TextBox.Font = Enum.Font.GothamSemibold
+	TextBox.BorderSizePixel = 0
+	TextBox.ZIndex = 3
+	TextBox.Parent = Frame9
+	local UICorner26 = Instance.new("UICorner")
+	UICorner26.CornerRadius = UDim.new(0, 8)
+	UICorner26.Parent = TextBox
+	local UIStroke21 = Instance.new("UIStroke")
+	UIStroke21.Color = Color3.fromRGB(255, 225, 70)
+	UIStroke21.Thickness = 1
+	UIStroke21.Parent = TextBox
+	local TextButton18 = Instance.new("TextButton")
+	TextButton18.Name = "Enable"
+	TextButton18.Size = UDim2.fromOffset(150, 30)
+	TextButton18.Position = UDim2.new(0, 20, 0, 80)
+	TextButton18.Text = "Enable Hitbox"
+	TextButton18.BackgroundColor3 = Color3.fromRGB(255, 225, 70)
+	TextButton18.TextColor3 = Color3.fromRGB(255, 255, 255)
+	TextButton18.TextSize = 12
+	TextButton18.Font = Enum.Font.GothamBold
+	TextButton18.AutoButtonColor = true
+	TextButton18.BorderSizePixel = 0
+	TextButton18.ZIndex = 3
+	TextButton18.Parent = Frame9
+	local UICorner27 = Instance.new("UICorner")
+	UICorner27.CornerRadius = UDim.new(0, 8)
+	UICorner27.Parent = TextButton18
+	local UIStroke22 = Instance.new("UIStroke")
+	UIStroke22.Color = Color3.fromRGB(255, 255, 255)
+	UIStroke22.Thickness = 1
+	UIStroke22.Parent = TextButton18
+	_G.HeadSize = 10
+	_G.Disabled = true
+	TextBox.FocusLost:Connect(function(enterPressed, inputObject)
+		TextBox.Text = "10"
+	end)
+	TextButton18.MouseButton1Click:Connect(function()
+		_G.Disabled = false
+		TextButton18.Text = "Disable Hitbox"
+		TextButton18.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+		TextButton18.TextColor3 = Color3.fromRGB(80, 70, 25)
+	end)
+	TextButton17.MouseButton1Click:Connect(function()
+		TextButton17.Text = "+"
+		local tween31 = TweenService:Create(Frame9, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.fromOffset(190, 35) })
+		tween31:Play()
+	end)
+	RunService.RenderStepped:Connect(function(deltaTime)
+		v3.Character:FindFirstChild("HumanoidRootPart")
+		v3.Character.HumanoidRootPart.Size = Vector3.new(10, 10, 10)
+		v3.Character.HumanoidRootPart.Transparency = 0.75
+		v3.Character.HumanoidRootPart.Color = Color3.fromRGB(255, 225, 70)
+		v3.Character.HumanoidRootPart.Material = Enum.Material.ForceField
+		v3.Character.HumanoidRootPart.CanCollide = false
+		v3.Character.HumanoidRootPart:FindFirstChild("HeavenHitboxOutline")
+	end)
+	task.spawn(function(...)
+		local players = Players:GetPlayers()
+		for i, v in ipairs(players) do
+			v.Character:FindFirstChild("HumanoidRootPart")
+		end
+		task.wait(1)
+		local players2 = Players:GetPlayers()
+		for i2, v2 in ipairs(players2) do
+			v2.Character:FindFirstChild("HumanoidRootPart")
+		end
+		task.wait(1)
+	end)
+end)
+TextButton8.MouseButton1Click:Connect(function()
+	TextButton8.Text = "Instant Grab: ON"
+	TextButton8.BackgroundTransparency = 0.05
+	TextButton8.BackgroundColor3 = Color3.fromRGB(255, 225, 70)
+	TextButton8.TextColor3 = Color3.fromRGB(255, 255, 255)
+	ProximityPromptService.PromptButtonHoldBegan:Connect(function(prompt2, player2)
+	end)
+end)
+TextButton9.MouseButton1Click:Connect(function()
+	TextButton9.Text = "Anti Knockback: ON"
+	TextButton9.BackgroundTransparency = 0.05
+	TextButton9.BackgroundColor3 = Color3.fromRGB(255, 225, 70)
+	TextButton9.TextColor3 = Color3.fromRGB(255, 255, 255)
+	local tagged = CollectionService:GetTagged("PlacedTrap")
+	for i4, v4 in ipairs(tagged) do
+		v4:GetAttribute("Owner")
+		v4.CanTouch = false
+		local descendants = v4:GetDescendants()
+		for i5, v5 in ipairs(descendants) do
+			v5.CanTouch = false
+		end
+		v4.DescendantAdded:Connect(function(descendant)
+			descendant.CanTouch = false
+		end)
+	end
+	local instanceAddedSignal = CollectionService:GetInstanceAddedSignal("PlacedTrap")
+	instanceAddedSignal:Connect(function(arg16)
+		task.defer(function(...)
+		end, arg16)
+	end)
+	local PlayerScripts = Players.LocalPlayer:FindFirstChild("PlayerScripts")
+	local PlayerModule = PlayerScripts:FindFirstChild("PlayerModule")
+	local module = require(PlayerModule)
+	module:GetControls()
+	local ReplicatedStorage = game:GetService("ReplicatedStorage")
+	local Shared = ReplicatedStorage:FindFirstChild("Shared")
+	local Modules = Shared:FindFirstChild("Modules")
+	local Ragdoll = Modules:WaitForChild("Ragdoll", 3)
+	require(Ragdoll)
+	RunService.Heartbeat:Connect(function(deltaTime2)
+		Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+		Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+	end)
+	Players.LocalPlayer.CharacterAdded:Connect(function(character)
+		task.wait(0.1)
+		Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+	end)
+	local attributeChangedSignal = Players.LocalPlayer:GetAttributeChangedSignal("RagdollEndTime")
+	attributeChangedSignal:Connect(function(arg17)
+	end)
+	Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+end)
+TextButton12.MouseButton1Click:Connect(function()
+	TextButton12.Text = "Infinity Jump: ON"
+	TextButton12.BackgroundTransparency = 0.05
+	TextButton12.BackgroundColor3 = Color3.fromRGB(255, 225, 70)
+	TextButton12.TextColor3 = Color3.fromRGB(255, 255, 255)
+	UserInputService.JumpRequest:Connect(function(arg18)
+		Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+	end)
+end)
+TextButton13.MouseButton1Click:Connect(function()
+	TextButton13.Text = "Anti-Lag: ON"
+	TextButton13.BackgroundTransparency = 0.05
+	TextButton13.BackgroundColor3 = Color3.fromRGB(255, 225, 70)
+	TextButton13.TextColor3 = Color3.fromRGB(255, 255, 255)
+	local result = settings()
+	result.Rendering.QualityLevel = Enum.QualityLevel.Level01
+	result.Rendering.MeshPartDetailLevel = Enum.MeshPartDetailLevel.Level01
+	result.Rendering.EditQualityLevel = Enum.QualityLevel.Level01
+	local result2 = UserSettings()
+	local UserGameSettings = result2:GetService("UserGameSettings")
+	UserGameSettings.SavedQualityLevel = Enum.SavedQualitySetting.QualityLevel1
+	Lighting.GlobalShadows = false
+	Lighting.ShadowSoftness = 0
+	Lighting.FogEnd = 9000000000
+	Lighting.Technology = Enum.Technology.Legacy
+	Lighting.EnvironmentDiffuseScale = 0
+	Lighting.EnvironmentSpecularScale = 0
+	workspace.Terrain.Decoration = false
+	workspace.Terrain.WaterWaveSize = 0
+	workspace.Terrain.WaterWaveSpeed = 0
+	workspace.Terrain.WaterReflectance = 0
+	workspace.Terrain.WaterTransparency = 1
+	workspace.DescendantAdded:Connect(function(descendant2)
+	end)
+	Lighting.DescendantAdded:Connect(function(descendant3)
+	end)
+	RunService.Heartbeat:Connect(function(deltaTime3)
+		descendant3.Enabled = false
+		descendant3.Rate = 0
+		descendant2.Enabled = false
+		descendant2.Rate = 0
+	end)
+	task.spawn(function(...)
+		local descendants2 = workspace:GetDescendants()
+		for i6, v6 in ipairs(descendants2) do
+			v6.Enabled = false
+			v6.Rate = 0
+		end
+		local descendants3 = Lighting:GetDescendants()
+		for i7, v7 in ipairs(descendants3) do
+			v7.Enabled = false
+			v7.Rate = 0
+		end
+	end)
+end)
+TextButton15.MouseButton1Click:Connect(function()
+	TextButton15.Text = "Background: Yellow"
+	ImageLabel.Visible = false
+	Frame.BackgroundColor3 = Color3.fromRGB(255, 225, 70)
+	Frame.BackgroundTransparency = 0.15
+end)
+TextButton16.MouseButton1Click:Connect(function()
+	UIScale.Scale = 1.2
+	TextButton16.Text = "GUI Scale: 1.2x"
+end)
+local Frame6 = Instance.new("Frame")
+Frame6.Name = "TeleportOverlay"
+Frame6.Size = UDim2.fromScale(1, 1)
+Frame6.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Frame6.BackgroundTransparency = 1
+Frame6.Visible = false
+Frame6.ZIndex = 5000
+Frame6.Parent = ScreenGui
+local ImageLabel3 = Instance.new("ImageLabel")
+ImageLabel3.AnchorPoint = Vector2.new(0.5, 0.5)
+ImageLabel3.Position = UDim2.new(0.5, 0, 0.42, 0)
+ImageLabel3.Size = UDim2.fromOffset(90, 90)
+ImageLabel3.BackgroundTransparency = 1
+ImageLabel3.Image = "rbxassetid://104159627923158"
+ImageLabel3.ScaleType = Enum.ScaleType.Fit
+ImageLabel3.ZIndex = 5001
+ImageLabel3.Parent = Frame6
+local TextLabel2 = Instance.new("TextLabel")
+TextLabel2.AnchorPoint = Vector2.new(0.5, 0)
+TextLabel2.Position = UDim2.new(0.5, 0, 0.52, 10)
+TextLabel2.Size = UDim2.fromOffset(300, 30)
+TextLabel2.BackgroundTransparency = 1
+TextLabel2.Text = "anti hit almost loaded"
+TextLabel2.TextColor3 = Color3.fromRGB(255, 225, 70)
+TextLabel2.Font = Enum.Font.GothamBold
+TextLabel2.TextSize = 15
+TextLabel2.ZIndex = 5001
+TextLabel2.Parent = Frame6
+local Frame7 = Instance.new("Frame")
+Frame7.AnchorPoint = Vector2.new(0.5, 0)
+Frame7.Position = UDim2.new(0.5, 0, 0.58, 10)
+Frame7.Size = UDim2.fromOffset(220, 4)
+Frame7.BackgroundColor3 = Color3.fromRGB(250, 250, 245)
+Frame7.BorderSizePixel = 0
+Frame7.ZIndex = 5001
+Frame7.Parent = Frame6
+local UICorner21 = Instance.new("UICorner")
+UICorner21.CornerRadius = UDim.new(1, 0)
+UICorner21.Parent = Frame7
+local Frame8 = Instance.new("Frame")
+Frame8.Size = UDim2.new(0, 0, 1, 0)
+Frame8.BackgroundColor3 = Color3.fromRGB(255, 225, 70)
+Frame8.BorderSizePixel = 0
+Frame8.ZIndex = 5002
+Frame8.Parent = Frame7
+local UICorner22 = Instance.new("UICorner")
+UICorner22.CornerRadius = UDim.new(1, 0)
+UICorner22.Parent = Frame8
+TextButton6.MouseButton1Click:Connect(function()
+	TextButton6.Text = "Anti-Hit: ON"
+	TextButton6.BackgroundTransparency = 0.05
+	TextButton6.BackgroundColor3 = Color3.fromRGB(255, 225, 70)
+	TextButton6.TextColor3 = Color3.fromRGB(255, 255, 255)
+end)
+TextButton7.MouseButton1Click:Connect(function()
+	TextButton7.Text = "Anti Hit V2: ON"
+	TextButton7.BackgroundTransparency = 0.05
+	TextButton7.BackgroundColor3 = Color3.fromRGB(255, 225, 70)
+	TextButton7.TextColor3 = Color3.fromRGB(255, 255, 255)
+end)
+ProximityPromptService.PromptTriggered:Connect(function(prompt, player)
+end)
+TextButton9.Text = "Anti Knockback: OFF"
+TextButton9.BackgroundTransparency = 0.05
+TextButton9.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextButton9.TextColor3 = Color3.fromRGB(80, 70, 25)
+print("Heaven Hub SAE loaded successfully")
